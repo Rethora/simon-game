@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@900&display=swap');
+
+@function shade($col) {
+  @return mix(black, $col, 60%);
+}
+
+$btn-diameter: 320px;
+$center-diameter: 300px;
+$color-stack: (green: shade(green),red: shade(red), yellow: shade(yellow), blue: shade(blue));
+$dark-red: rgb(187, 0, 0);
+$game-pad-width: 640px;
+
+
+@each $name, $color in $color-stack {
+  // color buttons
+  .btn-#{$name} {
+    background-color: #{$color};
+  }
+  // light up button when active
+  .btn-#{$name}.active {
+    background-color: #{$name};
+  }
+}
+
+// globals
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background-color: #F1F1F1;
+  margin: 0 auto;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+// 
+
+.game-pad {
+  border-radius: 100%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  width: #{$game-pad-width};
+}
+
+#simon-center {
+  width: #{$center-diameter};
+  height: #{$center-diameter};
+  background-color: #c9c6ca;
+  border-radius: 100%;
+  position: fixed;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 17px solid black;
+  text-align: center;
+}
+
+.simon-brand {
+  margin-top: 50px;
+  position: relative;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.brand-span {
+  position: absolute;
+  bottom: 0;
+  font-size: 18px;
+  font-family: Georgia;
+}
+
+.options-container {
+  display: flex;
+  height: 45px;
+  justify-content: center;
+}
+
+.count-display {
+  margin-right: 10px;
+  background-color: black;
+  border-radius: 8px;
+  width: 60px;
+}
+
+.count {
+  color: red;
+  position: relative;
+  margin: auto 0;
+}
+
+.btn-div {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.btn-group {
+  padding: 0;
+  border-radius: 100%;
+  border: 3px solid black;
+  width: 25px;
+  height: 25px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  background-color: #{$dark-red};
+}
+
+.game-btn-left, .game-btn-right {
+  width: #{$btn-diameter};
+  height: #{$btn-diameter};
+  border-color: black;
+  border-top-width: 26px;
+  border-bottom-width: 13px;
+}
+
+.game-btn-left {
+  border-top-left-radius: 100%;
+  border-left-width: 26px;
+  border-right-width: 13px;
+}
+
+.game-btn-right {
+  border-top-right-radius: 100%;
+  border-right-width: 26px;
+  border-left-width: 13px;
+}
+
+#bottom {
+  transform: rotate(180deg);
+}
+
+// power on/off slider
+.power-container {
+  margin-top: 40px;
+  display: inline-flex;
+}
+
+.power-label {
+  margin: auto 10px;
+}
+
+.strict-indicator {
+  border: 1px solid black;
+  border-radius: 100%;
+  background-color: #000;
+  width: 10px;
+  height: 10px;
+  margin-top: 8px;
+}
+
+.strict-indicator.active {
+  background-color: red;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(255, 89, 89);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #{$dark-red};
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(33px);
+  -ms-transform: translateX(33px);
+  transform: translateX(33px);
+}
+
+@media only screen and (max-width: 670px) {
+  * {
+    font-size: small;
+  }
+
+  .span-text {
+    font-size: 8px;
+  }
+
+  .game-pad {
+    width: calc(#{$game-pad-width / 2});
+  }
+
+  .game-btn-left, .game-btn-right {
+    width: calc(#{$btn-diameter / 2});
+    height: calc(#{$btn-diameter / 2});
+    border-top-width: 10px;
+    border-bottom-width: 5px;
+  }
+
+  .game-btn-left {
+    border-left-width: 10px;
+    border-right-width: 5px;
+  }
+
+  .game-btn-right {
+    border-right-width: 10px;
+    border-left-width: 5px;
+  }
+
+  #simon-center {
+    width: calc(#{$center-diameter / 2});
+    height: calc(#{$center-diameter / 2});
+    border-width: 8px;
+  }
+
+  .simon-brand {
+    margin-top: 20px;
+  }
+
+  .brand-span {
+    font-size: 8px;
+  }
+
+  .count-display {
+    margin: 0;
+    width: 40px;
+    height: 35px;
+  }
+
+  .btn-div {
+    margin: 0 5px;
+  }
+
+  .btn-group {
+    width: 12px;
+    height: 12px;
+    border: 1px solid black;
+  }
+
+  .strict-indicator {
+    margin-top: 3px;
+  }
+
+  .power-container {
+    margin-top: 0;
+  }
+
+  .switch {
+    width: 22px;
+    height: 11px;
+  }
+
+  .slider::before {
+    height: 9px;
+    width: 5px;
+    bottom: 1px;
+    left: 1px;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+  }
+}
